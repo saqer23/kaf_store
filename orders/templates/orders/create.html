@@ -1,0 +1,21 @@
+{% extends 'shop/index.html' %}
+{% block content %}
+<h1 class="border-bottom">الفاتورة</h1>
+    <div class="row">
+        <div class="col-4">
+            <h3>طلبك هو</h3>
+
+            {% for item in cart %}
+                <p class="border-bottom pb-2" style="text-decoration: none">{{ item.quantity }}x{{ item.product.name }} <span>{{ item.total_price }}ر.س</span></p>
+            {% endfor %}
+            <p>Total:${{ cart.get_total_price }}</p>
+        </div>
+        <div class="col-8">
+            <form method="POST" action="." class="order_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-secondary" type="submit">Place order</button>
+        </form>
+        </div>
+    </div>
+{% endblock content %}

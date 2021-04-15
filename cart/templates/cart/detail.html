@@ -1,0 +1,75 @@
+{% extends 'shop/index.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row border-bottom p-2">
+            <div class="col-4">
+                <h1>المشتريات</h1>
+            </div>
+        </div>
+        <div class="row border-bottom p-2">
+            <div class="col-2">
+                <h4>الصورة</h4>
+            </div>
+            <div class="col-2">
+                <h4>المنتج</h4>
+            </div>
+            <div class="col-2">
+                <h4>الكمية</h4>
+            </div>
+            <div class="col-2">
+                <h4>ازالة</h4>
+            </div>
+            <div class="col-2">
+                <h4>سعر القطعه</h4>
+            </div>
+            <div class="col-2">
+                <h4>السعر</h4>
+            </div>
+        </div>
+        {% if cart %}
+            {% for item in cart %}
+                    {% with product=item.product %}
+    <div class="row border-bottom p-4">
+            <div class="col-2">
+                <a href="{{ product.get_absolute_url }}"><img src="{{ product.img.url }}" width="75px" height="75px"></a>
+            </div>
+            <div class="col-2">
+                <p>{{ product.name }}</p>
+            </div>
+            <div class="col-2">
+                <form method="POST" action="{% url 'cart:cart_add' product.id %}">
+                    {% csrf_token %}
+                    + {{ item.update_quantity_form.quantity }}
+                    {{ item.update_quantity_form.update }}
+                    <input type="submit" value="تحديث" class="btn btn-secondary">
+                </form>
+            </div>
+            <div class="col-2">
+                <a href="{% url 'cart:cart_remove' product.id %}" class="btn btn-outline-secondary">ازالة</a>
+            </div>
+            <div class="col-2">
+                {{ item.price }}
+            </div>
+            <div class="col-2">
+                {{ item.total_price }}
+            </div>
+        </div>
+    {% endwith %}
+            {% endfor %}
+            {% else %}
+            <h1>لا يوجد منتجات</h1>
+    {% endif %}
+    <div class="row p-2 mb-2">
+        <div class="col-10">
+            <p class="text-right">
+                <a class="btn btn-secondary m-2" href="{% url 'product_list' %}">اكمل التسوق</a>
+                <a class="btn-outline-secondary" href="{% url 'orders:order_create' %}">الانتهاء من التسوق</a>
+            </p>
+        </div>
+        <div class="col-2">
+            المجموع:{{ cart.get_total_price }}
+        </div>
+    </div>
+    </div>
+{% endblock content %}

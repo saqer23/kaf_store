@@ -1,0 +1,29 @@
+{% extends 'shop/index.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <img style="height: 400px; width: 400px" src="{{ product.img.url }}" alt="{{ product.name }}" >
+        </div>
+        <div class="col-4">
+            <h1>{{ product.name }}</h1>
+            <p style="color:#fff; font-weight:bold;">السعر:{{ product.price }}ر.س</p>
+            <p>{{ product.details|linebreaks }}</p>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-8">
+
+    </div>
+    <div class="col-4">
+        <form method="POST" action="{% url 'cart:cart_add' product.id %}">
+            {% csrf_token %}
+            {{ cart_product_form }}
+            <input type="submit" value="اضافة للسلة" class="btn btn-secondary">
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock content %}

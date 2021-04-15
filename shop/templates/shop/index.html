@@ -1,0 +1,96 @@
+{% load static %}
+<!doctype>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'shop/css/bootstrap.min.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/81c2c05f29.js" ></script>
+   </head> 
+    <body>
+    <header>
+        <h3>coffee كاف</h3>
+        <a href="{% url 'product_list' %}"><img src="{% static 'shop/images/1.png' %}" id="logo"></a>
+          <a style="margin-left: 200px" href="{% url 'cart:cart_detail' %}" id="a" class="an">سلتي</a>
+
+
+        </header>
+<div class="container p-3 m-2">
+<div class="row">
+    {% block content %}
+
+        <div class="prod-container">
+            {% for product in products %}
+             <div class="prod-box">
+          <img style="height: 235px; width: 235px" src="{{ product.img.url }}" alt="{{ product.name }}" >
+          <div class="prod-trans">
+           <div class="prod-feature">
+             <p>{{ product.name }}</p>
+             <p style="color:#fff; font-weight:bold;">السعر:{{ product.price }}ر.س</p>
+               <a class="btn btn-outline-secondary" href="{% url 'product_detail' product.id product.slug %}">استعراض</a>
+           </div>
+          </div>
+        </div>
+            {% endfor %}
+        </div>
+{% endblock content %}
+</div>
+</div>
+
+
+
+    <div style="background-color: #ccb9cc;" class="container">
+        {% for i in about %}
+            <div class="row">
+            <div class="col-md">
+                <div class="card-group mt-2">
+                    <div class="card m-3">
+                        <h3 class="card-title text-center p-2 m-3 border-bottom">
+                            من نحن
+                        </h3>
+                        <div class="card-body">
+                            <div class="text-center">
+                            <img src="{% static 'shop/images/1.png' %}" alt="شعار المدونة" width="100px">
+                                 {{ i.text }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card m-3">
+                        <h3 class="card-title text-center p-2 m-3 border-bottom">
+                            توصيات
+                        </h3>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                    <div class="card m-3">
+                        <h3 class="card-title text-center p-2 m-3 border-bottom">
+                            مواقع التواصل
+                        </h3>
+                        <h4 class="card-body text-center">
+                            <a class="text-secondary m-2" href="https:/twitter.com/kafcoffee21?s=21"><i class="fab fa-twitter"></i></a>
+                            <a class="text-secondary m-2" href="https:/instagram.com/kaf.coffee21?igshid=k70qdwsdx5yz"><i class="fab fa-instagram"></i></a>
+                            <a href="https:/wa.me/message/B2W5RR7Y4AASJ1" class="btn btn-outline-secondary m-2">whatsapp</a>
+                            <a class="btn btn-outline-secondary m-2"> {{ i.ph1 }}</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row p-2">
+            <div class="col-md text-center">
+            <small class="text-light">&copy;
+                جميع الحقوق محفوظة  00967715150146</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <script src="{% static 'shop/js/main.js' %}"></script>
+    <script src="{% static 'shop/js/fontawesome-all.min.js' %}"></script>
+
+    </body>
+</html>
